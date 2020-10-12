@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name = "Grupo ESS v1.0"
