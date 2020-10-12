@@ -13,6 +13,8 @@ import androidx.navigation.fragment.findNavController
  */
 class FirstFragment : Fragment() {
 
+        //private final LinkedList<String> mWordList = new LinkedList<>();
+
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
