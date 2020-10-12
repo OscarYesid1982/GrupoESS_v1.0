@@ -17,5 +17,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph" />
 
+    <GridView
+        android:id="@+id/grid_view_cater"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnWidth="150dp"
+        android:horizontalSpacing="15dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="15dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
