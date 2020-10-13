@@ -7,7 +7,7 @@ public class Cateogorias {
         id = v_id;
     }
 
-    public int get_id_categoria(){
+    public int _id_categoria(){
         return id;
     }
 }

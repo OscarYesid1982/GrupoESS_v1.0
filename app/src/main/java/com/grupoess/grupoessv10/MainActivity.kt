@@ -2,10 +2,15 @@ package com.grupoess.grupoessv10
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.grupoess.grupoessv10.adapters.LanguageAdaptersCategorias
 import com.grupoess.grupoessv10.model.Categorias_object
 import com.grupoess.grupoessv10.variables.Cateogorias
@@ -20,28 +25,45 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
+        var context = this;
+        var arrayList_2:ArrayList<Categorias_object> = ArrayList()
+        //se declara la variable de firbases y se llama a categorias
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.getReference("categorias")
+
+        //se toma el grid_view_contet_main
         gridView = findViewById(R.id.grid_view_contet_main)
-        arrayList = ArrayList()
-        arrayList = setDataList()
-        languageAdapters = LanguageAdaptersCategorias(applicationContext, arrayList!!)
-        gridView?.adapter = languageAdapters
-        gridView?.onItemClickListener = this
-    }
 
-    private fun setDataList() : ArrayList<Categorias_object>{
+        //se llama el resultado de la consulta
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (array in dataSnapshot.children) {
+                    var Nombre = "";
+                    var id = array.key.toString().toInt();
+                    var icon = "";
+                    //se recorre el nombre y la categoria
+                    for (categoria in array.children) {
+                        if(categoria.key == "Nombre"){Nombre =  categoria.value.toString()}
+                        if(categoria.key == "Imagen"){icon =  categoria.value.toString()}
+                    }
+                    //se guarda el resultado en el array a publicar
+                    arrayList_2.add(Categorias_object(icon, Nombre, id))
+                }
 
-        var arrayList:ArrayList<Categorias_object> = ArrayList()
+                //se llena el array list
+                arrayList = arrayList_2;
+                languageAdapters = LanguageAdaptersCategorias(applicationContext, arrayList_2!!)
+                gridView?.adapter = languageAdapters
+                gridView?.onItemClickListener = context
+            }
 
-        arrayList.add(Categorias_object(R.drawable.calandra, "Calandras",1))
-        arrayList.add(Categorias_object(R.drawable.equipos, "Equipos",2))
-        arrayList.add(Categorias_object(R.drawable.insumos, "Insumos",3))
-        arrayList.add(Categorias_object(R.drawable.papel_sublima, "Papel Sublimación",4))
-        arrayList.add(Categorias_object(R.drawable.repuestos, "Repuestos",5))
-        arrayList.add(Categorias_object(R.drawable.servicios_tecnicos, "Servicios Tecnicos",6))
-        arrayList.add(Categorias_object(R.drawable.tintas_titan, "Tintas Titanium",7))
-        arrayList.add(Categorias_object(R.drawable.vinilo, "Vinilos",8))
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                Log.w("Alerta", "Failed to read value.", error.toException())
+            }
+        });
 
-        return arrayList
+
     }
 
 

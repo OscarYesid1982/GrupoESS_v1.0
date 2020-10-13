@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.grupoess.grupoessv10.R
 import com.grupoess.grupoessv10.model.Categorias_object
+import com.squareup.picasso.Picasso
 
 class LanguageAdaptersCategorias(var context: Context, var arrayList: ArrayList<Categorias_object>):BaseAdapter() {
 
@@ -31,7 +32,7 @@ class LanguageAdaptersCategorias(var context: Context, var arrayList: ArrayList<
 
         var listItem: Categorias_object = arrayList.get(position)
 
-        icons.setImageResource(listItem.icons!!)
+        Picasso.with(context).load(listItem.icons).into(icons);
         names.text = listItem.name
 
         return view

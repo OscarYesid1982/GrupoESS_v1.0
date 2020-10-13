@@ -8,13 +8,13 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.GridView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.grupoess.grupoessv10.adapters.LanguageAdaptersProductos
 import com.grupoess.grupoessv10.model.Productos_object
+import com.grupoess.grupoessv10.variables.Cateogorias
 
 
 class productos : AppCompatActivity(), AdapterView.OnItemClickListener {
@@ -28,51 +28,59 @@ class productos : AppCompatActivity(), AdapterView.OnItemClickListener {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
+        var context = this;
+        var arrayList_2:ArrayList<Productos_object> = ArrayList()
+        //se declara la variable de firbases y se llama a categorias
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.getReference("productos")
+        //se trae la clase que guardo la seleccion de la categoria
+        var cat = Cateogorias();
+
+
         gridView = findViewById(R.id.grid_view_contet_main)
         arrayList = ArrayList()
-        arrayList = setDataList()
-        languageAdapters = LanguageAdaptersProductos(applicationContext, arrayList!!)
-        gridView?.adapter = languageAdapters
-        gridView?.onItemClickListener = this
-    }
 
-    private fun setDataList() : ArrayList<Productos_object>{
-
-        // Write a message to the database
-        val database = FirebaseDatabase.getInstance()
-        //val myRef = database.getReference("productos")
-
-        var myRef = database.getReference("categorias/1/Imagen")
-        myRef.setValue("https://www.ambientum.com/wp-content/uploads/2019/02/ropa-696x468.jpg")
-
-
-        // Read from the database
-
-        /*
-        // Read from the database
+        //se llama el resultado de la consulta
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                val value = dataSnapshot.getValue(String::class.java)!!
-                Log.d("Alerta", "Value is: $value")
+                for (array in dataSnapshot.children) {
+                    var icons = "";
+                    var name = "";
+                    var descripcion = "";
+                    var id= array.key.toString().toInt();
+                    var id_categoria = 0;
+
+                    //se recorre el nombre y la categoria
+                    for (categoria in array.children) {
+                        if(categoria.key == "Descripcion"){descripcion =  categoria.value.toString()}
+                        if(categoria.key == "Id_categoria"){id_categoria =  categoria.value.toString().toInt()}
+                        if(categoria.key == "Nombre"){name =  categoria.value.toString()}
+                        if(categoria.key == "Imagen"){icons =  categoria.value.toString()}
+                    }
+                    //se hace el filtro de la categoria seleccionada
+                    Log.w("Alerta","---------------------------------------------------------------------")
+                    Log.w("Alerta",id.toString())
+                    Log.w("Alerta",id_categoria.toString())
+                    Log.w("Alerta",cat._id_categoria().toString())
+                    Log.w("Alerta","---------------------------------------------------------------------")
+                    if(cat._id_categoria() == id_categoria){
+                        arrayList_2.add(Productos_object(id, id_categoria, icons, name, descripcion))
+                    }
+                }
+
+                //se llena el array list
+                arrayList = arrayList_2;
+                languageAdapters = LanguageAdaptersProductos(applicationContext, arrayList_2!!)
+                gridView?.adapter = languageAdapters
+                gridView?.onItemClickListener = context
             }
 
             override fun onCancelled(error: DatabaseError) {
                 // Failed to read value
                 Log.w("Alerta", "Failed to read value.", error.toException())
             }
-        })*/
-
-        var arrayList:ArrayList<Productos_object> = ArrayList()
-
-        arrayList.add(Productos_object(1, 1, R.drawable.calandra, "xxxxx",""))
-        arrayList.add(Productos_object(2, 2, R.drawable.equipos, "Equipos",""))
-        arrayList.add(Productos_object(3, 1, R.drawable.insumos, "Insumos",""))
-
-        return arrayList
+        });
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
