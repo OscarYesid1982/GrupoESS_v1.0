@@ -33,7 +33,7 @@ class productos : AppCompatActivity(), AdapterView.OnItemClickListener {
 
         var arrayList:ArrayList<Productos_object> = ArrayList()
 
-        arrayList.add(Productos_object(1, 1, R.drawable.calandra, "Calandras",""))
+        arrayList.add(Productos_object(1, 1, R.drawable.calandra, "xxxxx",""))
         arrayList.add(Productos_object(2, 2, R.drawable.equipos, "Equipos",""))
         arrayList.add(Productos_object(3, 1, R.drawable.insumos, "Insumos",""))
 

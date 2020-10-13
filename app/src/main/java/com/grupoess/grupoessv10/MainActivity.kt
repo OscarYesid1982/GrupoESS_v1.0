@@ -60,5 +60,5 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         startActivityForResult(intent, 0)
     }
 
-    //Comentarios de prueba en Git
+
 }
