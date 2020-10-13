@@ -7,9 +7,10 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.grupoess.grupoessv10.R
-import com.grupoess.grupoessv10.model.LanguageItem
+import com.grupoess.grupoessv10.model.Categorias_object
+import com.grupoess.grupoessv10.model.Productos_object
 
-class LanguageAdapters(var context: Context, var arrayList: ArrayList<LanguageItem>):BaseAdapter() {
+class LanguageAdaptersProductos(var context: Context, var arrayList: ArrayList<Productos_object>):BaseAdapter() {
 
     override fun getItem(position: Int): Any {
         return arrayList.get(position)
@@ -29,12 +30,11 @@ class LanguageAdapters(var context: Context, var arrayList: ArrayList<LanguageIt
         var icons: ImageView = view.findViewById(R.id.icons)
         var names: TextView = view.findViewById(R.id.name_text_view)
 
-        var listItem: LanguageItem = arrayList.get(position)
+        var listItem: Productos_object = arrayList.get(position)
 
         icons.setImageResource(listItem.icons!!)
         names.text = listItem.name
 
         return view
     }
-
 }
