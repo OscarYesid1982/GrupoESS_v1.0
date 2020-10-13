@@ -2,13 +2,20 @@ package com.grupoess.grupoessv10
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.AdapterView
 import android.widget.GridView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.grupoess.grupoessv10.adapters.LanguageAdaptersProductos
 import com.grupoess.grupoessv10.model.Productos_object
+
 
 class productos : AppCompatActivity(), AdapterView.OnItemClickListener {
 
@@ -30,6 +37,32 @@ class productos : AppCompatActivity(), AdapterView.OnItemClickListener {
     }
 
     private fun setDataList() : ArrayList<Productos_object>{
+
+        // Write a message to the database
+        val database = FirebaseDatabase.getInstance()
+        //val myRef = database.getReference("productos")
+
+        var myRef = database.getReference("categorias/1/Imagen")
+        myRef.setValue("https://www.ambientum.com/wp-content/uploads/2019/02/ropa-696x468.jpg")
+
+
+        // Read from the database
+
+        /*
+        // Read from the database
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                val value = dataSnapshot.getValue(String::class.java)!!
+                Log.d("Alerta", "Value is: $value")
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                Log.w("Alerta", "Failed to read value.", error.toException())
+            }
+        })*/
 
         var arrayList:ArrayList<Productos_object> = ArrayList()
 
