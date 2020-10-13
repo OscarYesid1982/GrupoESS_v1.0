@@ -13,7 +13,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.grupoess.grupoessv10.adapters.LanguageAdaptersCategorias
 import com.grupoess.grupoessv10.model.Categorias_object
-import com.grupoess.grupoessv10.variables.Cateogorias
+import com.grupoess.grupoessv10.variables.Seleccion
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
     private var arrayList:ArrayList<Categorias_object> ? = null
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         var items: Categorias_object = arrayList!!.get(position)
-        var cat = Cateogorias();
+        var cat = Seleccion();
         cat.set_id_categoria(items.id!!)
 
         val intent = Intent(this, productos::class.java)
