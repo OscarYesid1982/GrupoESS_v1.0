@@ -59,4 +59,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         val intent = Intent(this, productos::class.java)
         startActivityForResult(intent, 0)
     }
+
+    //Comentarios de prueba en Git
 }
