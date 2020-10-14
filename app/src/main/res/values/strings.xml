@@ -20,4 +20,6 @@
     <string name="bottoms_label">Bottoms</string>
     <string name="dresses_label">Dresses</string>
     <string name="account_label">Mi Cuenta</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

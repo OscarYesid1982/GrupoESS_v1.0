@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.grupoess.grupoessv10.adapters.LanguageAdaptersProductos
+import com.grupoess.grupoessv10.adapters.ProductosAdapter
 import com.grupoess.grupoessv10.model.Productos_object
 import com.grupoess.grupoessv10.variables.Cateogorias
 
@@ -57,20 +58,24 @@ class productos : AppCompatActivity(), AdapterView.OnItemClickListener {
                         if(categoria.key == "Nombre"){name =  categoria.value.toString()}
                         if(categoria.key == "Imagen"){icons =  categoria.value.toString()}
                     }
-                    //se hace el filtro de la categoria seleccionada
-                    Log.w("Alerta","---------------------------------------------------------------------")
-                    Log.w("Alerta",id.toString())
-                    Log.w("Alerta",id_categoria.toString())
-                    Log.w("Alerta",cat._id_categoria().toString())
-                    Log.w("Alerta","---------------------------------------------------------------------")
                     if(cat._id_categoria() == id_categoria){
-                        arrayList_2.add(Productos_object(id, id_categoria, icons, name, descripcion))
+                        //arrayList_2.add(Productos_object(id, id_categoria, icons, name, descripcion))
+
                     }
                 }
 
                 //se llena el array list
-                arrayList = arrayList_2;
-                languageAdapters = LanguageAdaptersProductos(applicationContext, arrayList_2!!)
+
+                var variablePrueba = Cateogorias()
+                variablePrueba.traerProductos()
+
+
+                arrayList = variablePrueba.traerProductos()
+
+                Log.i("pruebax",arrayList.toString())
+                Log.i("pruebax",variablePrueba.traerProductos().toString())
+
+                languageAdapters = LanguageAdaptersProductos(applicationContext, arrayList!!)
                 gridView?.adapter = languageAdapters
                 gridView?.onItemClickListener = context
             }

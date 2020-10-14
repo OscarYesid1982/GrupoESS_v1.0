@@ -1,6 +1,7 @@
 package com.grupoess.grupoessv10.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -27,14 +28,19 @@ class LanguageAdaptersProductos(var context: Context, var arrayList: ArrayList<P
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
-        var view: View = View.inflate(context, R.layout.card_view_item_grid, null)
-        var icons: ImageView = view.findViewById(R.id.icons)
-        var names: TextView = view.findViewById(R.id.name_text_view)
+
+        var view: View = View.inflate(context, R.layout.item_productos, null)
+        var icons: ImageView = view.findViewById(R.id.Imageview_Producto)
+        var names: TextView = view.findViewById(R.id.DescripcionProducto)
+        var precio: TextView = view.findViewById(R.id.PrecioVenta)
 
         var listItem: Productos_object = arrayList.get(position)
 
-        Picasso.with(context).load(listItem.icons).into(icons);
+        Log.i("prueba",listItem.toString())
+
+        Picasso.get().load(listItem.icons).into(icons);
         names.text = listItem.name
+        precio.text="$200"
 
         return view
     }

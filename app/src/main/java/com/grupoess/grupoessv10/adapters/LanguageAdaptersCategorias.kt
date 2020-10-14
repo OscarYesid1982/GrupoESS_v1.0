@@ -32,7 +32,8 @@ class LanguageAdaptersCategorias(var context: Context, var arrayList: ArrayList<
 
         var listItem: Categorias_object = arrayList.get(position)
 
-        Picasso.with(context).load(listItem.icons).into(icons);
+        Picasso.get().load(listItem.icons).into(icons);
+
         names.text = listItem.name
 
         return view
