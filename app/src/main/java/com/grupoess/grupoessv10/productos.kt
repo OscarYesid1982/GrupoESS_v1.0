@@ -13,9 +13,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.grupoess.grupoessv10.adapters.LanguageAdaptersProductos
-import com.grupoess.grupoessv10.adapters.ProductosAdapter
 import com.grupoess.grupoessv10.model.Productos_object
-import com.grupoess.grupoessv10.variables.Cateogorias
+import com.grupoess.grupoessv10.variables.Seleccion
 
 
 class productos : AppCompatActivity(), AdapterView.OnItemClickListener {
@@ -35,7 +34,7 @@ class productos : AppCompatActivity(), AdapterView.OnItemClickListener {
         val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("productos")
         //se trae la clase que guardo la seleccion de la categoria
-        var cat = Cateogorias();
+        var cat = Seleccion();
 
 
         gridView = findViewById(R.id.grid_view_contet_main)
@@ -58,24 +57,16 @@ class productos : AppCompatActivity(), AdapterView.OnItemClickListener {
                         if(categoria.key == "Nombre"){name =  categoria.value.toString()}
                         if(categoria.key == "Imagen"){icons =  categoria.value.toString()}
                     }
-                    if(cat._id_categoria() == id_categoria){
-                        //arrayList_2.add(Productos_object(id, id_categoria, icons, name, descripcion))
-
+                    //se hace el filtro de la categoria seleccionada
+                    if(cat.get_id_categoria() == id_categoria){
+                        arrayList_2.add(Productos_object(id, id_categoria, icons, name, descripcion))
                     }
                 }
 
                 //se llena el array list
-
-                var variablePrueba = Cateogorias()
-                variablePrueba.traerProductos()
-
-
-                arrayList = variablePrueba.traerProductos()
-
-                Log.i("pruebax",arrayList.toString())
-                Log.i("pruebax",variablePrueba.traerProductos().toString())
-
-                languageAdapters = LanguageAdaptersProductos(applicationContext, arrayList!!)
+                arrayList = arrayList_2;
+                Log.i("Alerta",arrayList_2.toString())
+                languageAdapters = LanguageAdaptersProductos(applicationContext, arrayList_2!!)
                 gridView?.adapter = languageAdapters
                 gridView?.onItemClickListener = context
             }
@@ -94,9 +85,9 @@ class productos : AppCompatActivity(), AdapterView.OnItemClickListener {
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        //var items: Productos_object = arrayList!!.get(position)
-        //var cat = Cateogorias();
-        //cat.set_id_categoria(items.id!!)
+        var items: Productos_object = arrayList!!.get(position)
+        var cat = Seleccion();
+        cat.set_id_producto(items.id!!)
 
         val intent = Intent(this, seleccion_producto::class.java)
         startActivityForResult(intent, 0)

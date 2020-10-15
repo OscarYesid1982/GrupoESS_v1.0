@@ -21,13 +21,11 @@ class seleccion_producto : AppCompatActivity() {
         var cat = Seleccion();
         val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("productos/"+cat.get_id_producto())
-        Log.i("Alerta","productos/"+cat.get_id_producto())
         var context = this;
 
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (array in dataSnapshot.children) {
-                    Log.i("Alerta",array.toString())
                     //se recorre el nombre y la categoria
                     if(array.key == "Nombre"){seleccion_producto_id_titulo.text =array.value.toString()}
                     if(array.key == "Descripcion"){seleccion_producto_id_descripcion.text = array.value.toString()}
