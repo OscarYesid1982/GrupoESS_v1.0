@@ -29,7 +29,7 @@ class seleccion_producto : AppCompatActivity() {
                     //se recorre el nombre y la categoria
                     if(array.key == "Nombre"){seleccion_producto_id_titulo.text =array.value.toString()}
                     if(array.key == "Descripcion"){seleccion_producto_id_descripcion.text = array.value.toString()}
-                    if(array.key == "Imagen"){Picasso.with(context).load(array.value.toString()).into(seleccion_producto_id_imagen);}
+                    if(array.key == "Imagen"){Picasso.get().load(array.value.toString()).into(seleccion_producto_id_imagen);}
                 }
             }
 
